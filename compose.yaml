@@ -1,7 +1,7 @@
 version: '3.9'
 
 x-omnistrate-service-plan:
-  tenancyType: 'OMNISTRATE_MULTITENANT_TENANCY'
+  tenancyType: 'OMNISTRATE_MULTI_TENANCY'
 
 x-customer-integrations:
   logs:
@@ -9,7 +9,7 @@ x-customer-integrations:
 
 services:
   gpuinfo:
-    image: ghcr.io/omnistrate-community/gpu-slicing-example:0.0.1
+    image: ghcr.io/omnistrate-community/gpu-slicing-example:0.0.2
     ports:
       - 5000:5000
     platform: linux/amd64
@@ -43,7 +43,7 @@ services:
         overUtilizedMinutesBeforeScalingUp: 3
         overUtilizedThreshold: 80
       serverlessConfiguration:
-        targetPort: 5432
+        targetPort: 5000
         enableAutoStop: true
         minimumNodesInPool: 1
 
