@@ -26,10 +26,26 @@ def get_gpu_info():
         }
         
     try:
-                    'free': free
-                },
-                'temperature': temp
-            })
+        # Run nvidia-smi to get GPU information
+        result = subprocess.run(['nvidia-smi', '--query-gpu=name,memory.total,memory.used,memory.free,temperature.gpu', 
+                               '--format=csv,noheader,nounits'], capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            raise Exception("Failed to get GPU information")
+
+        gpus = []
+        for line in result.stdout.strip().split('\n'):
+            if line.strip():
+                name, total, used, free, temp = [x.strip() for x in line.split(',')]
+                gpus.append({
+                    'name': name,
+                    'memory': {
+                        'total': int(total),
+                        'used': int(used),
+                        'free': int(free)
+                    },
+                    'temperature': int(temp)
+                })
         return {'status': 'success', 'gpu_count': len(gpus), 'gpus': gpus}
     except Exception as e:
         return {'status': 'error', 'message': str(e)}
