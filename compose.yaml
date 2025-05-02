@@ -26,6 +26,7 @@ services:
         description: Instance Type
         name: Instance Type
         type: String
+        defaultValue: g4dn.xlarge
         modifiable: true
         required: true
         export: true
