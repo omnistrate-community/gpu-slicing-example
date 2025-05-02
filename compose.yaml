@@ -9,7 +9,7 @@ x-customer-integrations:
 
 services:
   gpuinfo:
-    image: ghcr.io/omnistrate-community/gpu-slicing-example:0.0.2
+    image: ghcr.io/omnistrate-community/gpu-slicing-example:0.0.3
     ports:
       - 5000:5000
     platform: linux/amd64
