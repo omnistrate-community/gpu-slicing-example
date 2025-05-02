@@ -71,3 +71,29 @@ delete-all-wait:
 	else \
 		echo "No instances found to delete"; \
 	fi
+
+# Detect OS and GPU
+OS := $(shell uname)
+HAS_NVIDIA_GPU := $(shell command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits 2>/dev/null | wc -l)
+
+.PHONY: build
+build:
+	docker build -t gpu-slicing-app .
+
+.PHONY: run
+run:
+ifeq ($(OS),Darwin)
+	@echo "Running on macOS without GPU support"
+	docker run -p 5000:5000 gpu-slicing-app
+else
+	@if [ "$(HAS_NVIDIA_GPU)" -gt "0" ]; then \
+		echo "Running with NVIDIA GPU support ($(HAS_NVIDIA_GPU) GPUs detected)"; \
+		docker run --gpus all -p 5000:5000 gpu-slicing-app; \
+	else \
+		echo "Running without GPU support - no NVIDIA GPUs detected"; \
+		docker run -p 5000:5000 gpu-slicing-app; \
+	fi
+endif
+
+.PHONY: dev
+dev: build run

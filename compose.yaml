@@ -1,25 +1,85 @@
 version: '3.9'
+
+x-omnistrate-service-plan:
+  tenancyType: 'OMNISTRATE_DEDICATED_TENANCY'
+  deployment: 
+    hostedDeployment: 
+    omnistrate:
+      instanceTypes:
+        - cloudProvider: aws
+          name: g4dn.xlarge
+        - cloudProvider: gcp
+          name: n1-standard-4
+        - cloudProvider: azure
+          name: Standard_NC6s_v3
+
 x-customer-integrations:
-  licensing: 
-    licenseExpirationInDays: 7
-    productPlanUniqueIdentifier: 'PRODUCT-SAMPLE-SKU-UNIQUE-VALUE'
   logs:
   metrics:
 
-x-omnistrate-load-balancer:
-  https:
-    - name: frontend
-      description: L7 Load Balancer for Web
-      paths:
-        - associatedResourceKey: web
-          path: /
-          backendPort: 8080
-
 services:
-  web:
-    image: ghcr.io/omnistrate-community/licensing-example-go:0.1.10
-    ports:
-      - '8080:8080'
+  triton:
+    image: ghcr.io/omnistrate-community/gpu-slicing-example
     environment:
-      - SECURITY_CONTEXT_USER_ID=2000
-      - SECURITY_CONTEXT_GROUP_ID=1000
+      - SECURITY_CONTEXT_USER_ID=1000
+      - SECURITY_CONTEXT_GROUP_ID=3000
+    ports:
+      - "8000:8000"  # HTTP/REST API
+      - "8001:8001"  # gRPC
+      - "8002:8002"  # Metrics
+    command: >
+      tritonserver
+      --model-repository=/models
+      --http-port=8000
+      --grpc-port=8001
+      --metrics-port=8002
+      --allow-http=true
+      --allow-grpc=true
+      --allow-metrics=true
+    volumes:
+      - source: ./models
+        target: /models
+        type: bind
+        x-omnistrate-storage:
+          aws:
+            instanceStorageType: AWS::EBS_GP3
+            instanceStorageSizeGi: 10
+            instanceStorageIOPS: 3000
+            instanceStorageThroughputMiBps: 125
+    platform: linux/amd64
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+    x-omnistrate-compute:
+      replicaCount: 1
+      instanceTypes:
+        - cloudProvider: aws
+          name: g4dn.xlarge
+
+  gpu-info:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu-info
+    ports:
+      - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    x-omnistrate-compute:
+      replicaCount: 1
+      instanceTypes:
+        - cloudProvider: aws
+          name: g4dn.xlarge
