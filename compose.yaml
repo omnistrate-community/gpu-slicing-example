@@ -1,7 +1,19 @@
 version: '3.9'
 
+# x-omnistrate-my-account:
+#   AwsAccountId: "<YOUR ACCOUNT ID>"
+#   AwsBootstrapRoleAccountArn: arn:aws:iam::<YOUR ACCOUNT ID>:role/omnistrate-bootstrap-role
+
 x-omnistrate-service-plan:
   tenancyType: 'OMNISTRATE_MULTI_TENANCY'
+
+x-internal-integrations:
+  multiTenantGpu:
+    instanceType: g4dn.xlarge
+    ## timeSlicingReplicas: 10 # number of replicas to be used for time slicing
+    ## MIG
+    ## instanceType: p4d.24xlarge (instance type that supports mig)
+    ## migProfile: 1g.5gb 
 
 x-customer-integrations:
   logs:
@@ -21,23 +33,10 @@ services:
         reservations:
           cpus: '100m'
           memory: 50M
-    x-omnistrate-api-params:
-      - key: instanceType
-        description: Instance Type
-        name: Instance Type
-        type: String
-        defaultValue: g4dn.xlarge
-        modifiable: true
-        required: true
-        export: true
-    x-omnistrate-compute:
-      instanceTypes:
-        - cloudProvider: aws
-          apiParam: instanceType
     x-omnistrate-capabilities:
-      autoscaling:
-        maxReplicas: 3
-        minReplicas: 1
+      autoscaling: 
+        maxReplicas: 1 # for production set to your desired maximum (for dev we want to keep it low)
+        minReplicas: 1 # for production set to your desired minimum
         idleMinutesBeforeScalingDown: 2
         idleThreshold: 20
         overUtilizedMinutesBeforeScalingUp: 3
@@ -45,5 +44,5 @@ services:
       serverlessConfiguration:
         targetPort: 5000
         enableAutoStop: true
-        minimumNodesInPool: 1
+        minimumNodesInPool: 1 # for production set to your desired warm pool size (for dev we want to keep it low)
 

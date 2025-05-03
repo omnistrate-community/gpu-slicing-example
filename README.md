@@ -1,4 +1,4 @@
-# Container Based Service Template
+# GPU Slicing Example
 
 Example on how to build and deploy a Container Based Service in (Omnistrate)[https://www.omnistrate.com]
 

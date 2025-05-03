@@ -4,7 +4,6 @@ MAIN_RESOURCE_NAME=gpuinfo
 ENVIRONMENT=Dev
 CLOUD_PROVIDER=aws
 REGION=ap-south-1
-INSTANCE_TYPE=g4dn.xlarge
 
 # Load variables from .env if it exists
 ifneq (,$(wildcard .env))
@@ -31,7 +30,7 @@ release:
 
 .PHONY: create
 create:
-	@omnistrate-ctl instance create --environment ${ENVIRONMENT} --cloud-provider ${CLOUD_PROVIDER} --region ${REGION} --plan ${SERVICE_PLAN} --service ${SERVICE_NAME} --resource ${MAIN_RESOURCE_NAME} --param '{"instanceType":"${INSTANCE_TYPE}"}'
+	@omnistrate-ctl instance create --environment ${ENVIRONMENT} --cloud-provider ${CLOUD_PROVIDER} --region ${REGION} --plan ${SERVICE_PLAN} --service ${SERVICE_NAME} --resource gpuinfo
 
 .PHONY: list
 list:
