@@ -5,7 +5,7 @@ version: '3.9'
 #   AwsBootstrapRoleAccountArn: arn:aws:iam::<YOUR ACCOUNT ID>:role/omnistrate-bootstrap-role
 
 x-omnistrate-service-plan:
-  tenancyType: 'OMNISTRATE_MULTI_TENANCY'
+  tenancyType: 'OMNISTRATE_MULTI_TENANCY' # or 'OMNISTRATE_DEDICATED_TENANCY' to use dedicated GPU instances
 
 x-internal-integrations:
   multiTenantGpu:
