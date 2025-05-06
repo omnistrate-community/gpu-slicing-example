@@ -1,5 +1,6 @@
-SERVICE_NAME=gpu-slicing-example
-SERVICE_PLAN=gpu-slicing-example
+SERVICE_NAME=gpu-slicing-example-mt
+SERVICE_PLAN=gpu-slicing-example-mt
+COMPOSE_FILE=compose.mt.yaml
 MAIN_RESOURCE_NAME=gpuinfo
 ENVIRONMENT=Dev
 CLOUD_PROVIDER=aws
@@ -26,7 +27,7 @@ login:
 
 .PHONY: release
 release:
-	@omnistrate-ctl build -f compose.yaml --name ${SERVICE_NAME}  --environment ${ENVIRONMENT} --environment-type ${ENVIRONMENT} --release-as-preferred
+	@omnistrate-ctl build -f ${COMPOSE_FILE} --name ${SERVICE_NAME}  --environment ${ENVIRONMENT} --environment-type ${ENVIRONMENT} --release-as-preferred
 
 .PHONY: create
 create:
