@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# create_and_monitor.sh
+# This script automates the process of creating a GPU instance using Omnistrate,
+# monitoring its status, and testing the service endpoint.
+# It handles cleanup of the instance upon exit
+
+# NOTES: this script is not ready for use yet, it is a work in progress
+
 # Service configuration
 SERVICE_NAME="gpu-slicing-example"
 SERVICE_PLAN="gpu-slicing-example"
