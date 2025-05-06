@@ -38,7 +38,7 @@ services:
       serverlessConfiguration:
         targetPort: 5000
         enableAutoStop: true
-        minimumNodesInPool: 0 # for production set to your desired warm pool size (for dev we want to keep it low)
+        minimumNodesInPool: 1 # for production set to your desired warm pool size (for dev we want to keep it low)
     # x-omnistrate-compute: # required for dedicated
     #   instanceTypes:
     #     - cloudProvider: aws
