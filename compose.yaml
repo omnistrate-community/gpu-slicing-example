@@ -10,7 +10,8 @@ x-omnistrate-service-plan:
 x-internal-integrations:
   multiTenantGpu:
     instanceType: g4dn.xlarge
-    ## timeSlicingReplicas: 10 # number of replicas to be used for time slicing
+    ## https://developer.nvidia.com/blog/improving-gpu-utilization-in-kubernetes/#virtualization_with_vgpu
+    timeSlicingReplicas: 10 # number of replicas to be used for time slicing
     ## MIG
     ## instanceType: p4d.24xlarge (instance type that supports mig)
     ## migProfile: 1g.5gb 
@@ -35,7 +36,7 @@ services:
           memory: 50M
     x-omnistrate-capabilities:
       autoscaling: 
-        maxReplicas: 1 # for production set to your desired maximum (for dev we want to keep it low)
+        maxReplicas: 3 # for production set to your desired maximum (for dev we want to keep it low)
         minReplicas: 1 # for production set to your desired minimum
         idleMinutesBeforeScalingDown: 2
         idleThreshold: 20
@@ -44,5 +45,4 @@ services:
       serverlessConfiguration:
         targetPort: 5000
         enableAutoStop: true
-        minimumNodesInPool: 1 # for production set to your desired warm pool size (for dev we want to keep it low)
-
+        minimumNodesInPool: 0 # for production set to your desired warm pool size (for dev we want to keep it low)

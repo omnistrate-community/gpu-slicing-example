@@ -63,6 +63,8 @@ while true; do
         exit 1
     fi
 
+    echo "Instance JSON: $instance_json"
+
     status=$(echo "$instance_json" | jq -r '.status // "unknown"')
     
     # Check for cluster endpoint and ports in detailedNetworkTopology with null safety
@@ -88,8 +90,7 @@ while true; do
             "null"
         end' 2>/dev/null)
     
-    if [ "$cluster_endpoint" != "null" ] && [ ! -z "$cluster_ports" ] && [ "$cluster_ports" != "null" ]; then
-        echo "Instance is running!"
+    if [ ! -z "$cluster_endpoint" ] && [ "$cluster_endpoint" != "null" ] && [ ! -z "$cluster_ports" ] && [ "$cluster_ports" != "null" ]; then
         echo "Cluster Endpoint: $cluster_endpoint"
         echo "Cluster Ports: $cluster_ports"
         break
