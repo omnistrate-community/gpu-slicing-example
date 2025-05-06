@@ -10,11 +10,7 @@ x-omnistrate-service-plan:
 x-internal-integrations:
   multiTenantGpu:
     instanceType: g4dn.xlarge
-    ## https://developer.nvidia.com/blog/improving-gpu-utilization-in-kubernetes/#virtualization_with_vgpu
-    timeSlicingReplicas: 10 # number of replicas to be used for time slicing
-    ## MIG
-    ## instanceType: p4d.24xlarge (instance type that supports mig)
-    ## migProfile: 1g.5gb 
+    timeSlicingReplicas: 2 # number of replicas to be used for time slicing
 
 services:
   gpuinfo:
