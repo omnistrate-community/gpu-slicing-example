@@ -16,10 +16,6 @@ x-internal-integrations:
     ## instanceType: p4d.24xlarge (instance type that supports mig)
     ## migProfile: 1g.5gb 
 
-x-customer-integrations:
-  logs:
-  metrics:
-
 services:
   gpuinfo:
     image: ghcr.io/omnistrate-community/gpu-slicing-example:0.0.3
