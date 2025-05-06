@@ -1,6 +1,6 @@
 # GPU Slicing Example
 
-Example on how to build and deploy a Container Based Service in (Omnistrate)[https://www.omnistrate.com]
+Example on how to build and deploy a MT solution on top of GPUs and bin-pack services using a Container Based Service in (Omnistrate)[https://www.omnistrate.com]
 
 ## Configuration Setup
 Before using the make commands, you need to set up the following configuration files:

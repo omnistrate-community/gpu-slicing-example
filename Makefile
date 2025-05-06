@@ -1,6 +1,6 @@
-SERVICE_NAME=gpu-slicing-example-mt
-SERVICE_PLAN=gpu-slicing-example-mt
-COMPOSE_FILE=compose.mt.yaml
+SERVICE_NAME=gpu-slicing-example
+SERVICE_PLAN=gpu-slicing-example
+COMPOSE_FILE=compose.yaml
 MAIN_RESOURCE_NAME=gpuinfo
 ENVIRONMENT=Dev
 CLOUD_PROVIDER=aws
