@@ -7,10 +7,11 @@ version: '3.9'
 x-omnistrate-service-plan:
   tenancyType: 'OMNISTRATE_MULTI_TENANCY' # or 'OMNISTRATE_DEDICATED_TENANCY' to use dedicated GPU instances
 
-x-internal-integrations:
-  multiTenantGpu:
-    instanceType: g4dn.xlarge
+x-internal-integrations: 
+  multiTenantGpu: # required for multi-tenancy
+    instanceType: g4dn.xlarge # instance type to be used for GPU slicing
     timeSlicingReplicas: 2 # number of replicas to be used for time slicing
+    
 
 services:
   gpuinfo:
@@ -38,3 +39,7 @@ services:
         targetPort: 5000
         enableAutoStop: true
         minimumNodesInPool: 0 # for production set to your desired warm pool size (for dev we want to keep it low)
+    # x-omnistrate-compute: # required for dedicated
+    #   instanceTypes:
+    #     - cloudProvider: aws
+    #       name: g4dn.xlarge
