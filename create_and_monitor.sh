@@ -9,7 +9,7 @@
 
 # Service configuration
 SERVICE_NAME="gpu-slicing-example"
-SERVICE_PLAN="gpu-slicing-example"
+SERVICE_PLAN="gpu-slicing-example hosted tier"
 ENVIRONMENT="Dev"
 CLOUD_PROVIDER="aws"
 REGION="ap-south-1"

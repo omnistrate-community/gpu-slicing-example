@@ -4,7 +4,7 @@ COMPOSE_FILE=compose.yaml
 MAIN_RESOURCE_NAME=gpuinfo
 ENVIRONMENT=Dev
 CLOUD_PROVIDER=aws
-REGION=us-east-1
+REGION=ap-south-1
 
 # Load variables from .env if it exists
 ifneq (,$(wildcard .env))
