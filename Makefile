@@ -1,10 +1,10 @@
 SERVICE_NAME=gpu-slicing-example
-SERVICE_PLAN=gpu-slicing-example
+SERVICE_PLAN='gpu-slicing-example hosted tier'
 COMPOSE_FILE=compose.yaml
 MAIN_RESOURCE_NAME=gpuinfo
 ENVIRONMENT=Dev
 CLOUD_PROVIDER=aws
-REGION=ap-south-1
+REGION=us-east-1
 
 # Load variables from .env if it exists
 ifneq (,$(wildcard .env))
@@ -20,6 +20,10 @@ install-ctl:
 .PHONY: upgrade-ctl
 upgrade-ctl:
 	@brew upgrade omnistrate/tap/omnistrate-ctl
+
+.PHONY: version
+version:
+	@omnistrate-ctl --version
 	
 .PHONY: login
 login:
@@ -29,9 +33,13 @@ login:
 release:
 	@omnistrate-ctl build -f ${COMPOSE_FILE} --name ${SERVICE_NAME}  --environment ${ENVIRONMENT} --environment-type ${ENVIRONMENT} --release-as-preferred
 
+.PHONY: describe
+describe:
+	@omnistrate-ctl service-plan describe ${SERVICE_NAME} ${SERVICE_PLAN} --output json
+
 .PHONY: create
 create:
-	@omnistrate-ctl instance create --environment ${ENVIRONMENT} --cloud-provider ${CLOUD_PROVIDER} --region ${REGION} --plan ${SERVICE_PLAN} --service ${SERVICE_NAME} --resource gpuinfo
+	@omnistrate-ctl instance create --environment ${ENVIRONMENT} --cloud-provider ${CLOUD_PROVIDER} --region ${REGION} --plan ${SERVICE_PLAN} --service ${SERVICE_NAME} --resource ${MAIN_RESOURCE_NAME}
 
 .PHONY: list
 list:

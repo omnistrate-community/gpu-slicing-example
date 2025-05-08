@@ -1,10 +1,12 @@
 version: '3.9'
 
+# UNCOMMENT: Set your account id
 # x-omnistrate-my-account:
 #   AwsAccountId: "<YOUR ACCOUNT ID>"
 #   AwsBootstrapRoleAccountArn: arn:aws:iam::<YOUR ACCOUNT ID>:role/omnistrate-bootstrap-role
 
 x-omnistrate-service-plan:
+  name: 'gpu-slicing-example hosted tier' 
   tenancyType: 'OMNISTRATE_MULTI_TENANCY' 
 
 x-internal-integrations: 
