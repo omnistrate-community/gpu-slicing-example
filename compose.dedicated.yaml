@@ -5,6 +5,7 @@ version: '3.9'
 #   AwsBootstrapRoleAccountArn: arn:aws:iam::<YOUR ACCOUNT ID>:role/omnistrate-bootstrap-role
 
 x-omnistrate-service-plan:
+  name: 'gpu-slicing-example dedicated tier' 
   tenancyType: 'OMNISTRATE_DEDICATED_TENANCY' 
 
 services:
